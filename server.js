@@ -13,8 +13,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-app.use('/', indexRoutes);
-app.use('/', notesRoutes);
+app.use('/api/notes', notesRoutes); // Register API routes first
+app.use('/', indexRoutes); // Then register general routes
 
 app.use(errorHandler);
 
