@@ -28,13 +28,13 @@ const hide = (elem) => {
 // activeNote is used to keep track of the note in the textarea
 let activeNote = {};
 
-async function getNotes() {
-  const response = await fetch('/api/notes');
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
-  return response.json(); // Expecting a JSON response
-}
+const getNotes = () =>
+  fetch('/api/notes', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
 
 const saveNote = (note) =>
   fetch('/api/notes', {
@@ -128,8 +128,8 @@ const handleRenderBtns = () => {
 };
 
 // Render the list of note titles
-const renderNoteList = async () => {
-  const jsonNotes = await getNotes(); // Fetch notes using the updated getNotes function
+const renderNoteList = async (notes) => {
+  let jsonNotes = await notes.json();
   if (window.location.pathname === '/notes') {
     noteList.forEach((el) => (el.innerHTML = ''));
   }
